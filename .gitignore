@@ -1,0 +1,8 @@
+/old
+
+.idea
+
+api_connection.py
+.env
+
+*.csv
