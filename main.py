@@ -18,6 +18,8 @@ def convert_others(file):
         quantity = line.split("szt.")[1].split()[0]
         productCode = line.split()[0]
 
+        print(line.split("szt.")[1].split()[2])
+
         if int(quantity) > 1:
             quantiy_rows.append([productCode, quantity, 0, 1, "24 godziny"])
 
@@ -37,6 +39,15 @@ def convert_rabalux(file):
 
         if int(quantity) > 1:
             quantiy_rows.append([newProductCode, quantity, 0, 1, "24 godziny"])
+
+def convert_orlicki(file):
+    for line in file:
+        if "szt." in line:
+            quantity = line.split("szt.")[1].split()[0]
+            productCode = line.split("OR ")[0]
+
+            if int(quantity) >= 2:
+                quantiy_rows.append([productCode, quantity, 0, 1, "24 godziny"])
 
 
 # Move old csv file to old directory
@@ -71,6 +82,8 @@ for file_name in txt_files:
 
     if 'rabalux' in file_name.lower():
         convert_rabalux(file)
+    elif 'orlicki' in file_name.lower():
+        convert_orlicki(file)
     else:
         convert_others(file)
 
@@ -83,7 +96,7 @@ if len(txt_files) > 0:
 
     with open(final_file_name, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(["product_code", "stock", "stock_warnlevel", "active", "delivery"])
+        writer.writerow(["product_code", "price", "stock", "stock_warnlevel", "active", "delivery"])
         writer.writerows(quantiy_rows)
 
     # Move txt files to old directory
@@ -110,6 +123,7 @@ if len(txt_files) > 0:
                 if file.endswith(".txt") or txt_file.endswith(".TXT"):
                     Path(os.path.join(DIR_LOCATION, txt_file)).rename(
                         "./old/" + old_dir_name + "/" + os.path.basename(txt_file))
+
 
 
 print("Files converted :)")
