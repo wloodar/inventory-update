@@ -3,7 +3,7 @@ from pathlib import Path
 import csv
 import os
 
-DIR_LOCATION = "C:\\Users\\user\\Desktop\\inventory"
+DIR_LOCATION = "/Users/jakubwlodarczyk/Desktop/inventory-update"
 OLD_DIR = './old/'
 
 final_file_name = ""
@@ -96,7 +96,7 @@ if len(txt_files) > 0:
 
     with open(final_file_name, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(["product_code", "price", "stock", "stock_warnlevel", "active", "delivery"])
+        writer.writerow(["product_code", "stock", "stock_warnlevel", "active", "delivery"])
         writer.writerows(quantiy_rows)
 
     # Move txt files to old directory
